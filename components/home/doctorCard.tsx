@@ -37,7 +37,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
         <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-3 text-sm break-words">
           <div className="flex items-center">
             <PawPrint className="h-4 w-4" />
-            <span className="ml-2">CRM</span>
+            <span className="ml-2">CRMV</span>
           </div>
           <span className="truncate">{doctor.licenseNumber}</span>
 

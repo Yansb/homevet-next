@@ -6,7 +6,7 @@ import { useAuthStore } from "@/stores/authStore";
 
 export default function RootPage() {
   const router = useRouter();
-  const { user, loading } = useAuthStore();
+  const { firebaseUser, loading } = useAuthStore();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
@@ -17,14 +17,14 @@ export default function RootPage() {
 
       // Usamos setTimeout para garantir que o redirecionamento ocorra após o React completar o ciclo de renderização
       setTimeout(() => {
-        if (user) {
+        if (firebaseUser) {
           router.replace("/home");
         } else {
           router.replace("/login");
         }
       }, 0);
     }
-  }, [user, loading, router, isRedirecting]);
+  }, [firebaseUser, loading, router, isRedirecting]);
 
   // Exibindo um estado de carregamento até que o redirecionamento aconteça
   if (loading || isRedirecting) {

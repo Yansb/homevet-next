@@ -11,34 +11,52 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/stores/userStore";
+import { Skeleton } from "./ui/skeleton";
+import { useGetLoggedUser } from "@/services/userService";
 
 export function SidebarDropdownMenu() {
-  const { user, logout } = useAuthStore();
+  const { firebaseUser, logout } = useAuthStore();
+  const { user } = useUserStore();
   const router = useRouter();
 
-  const splittedUserName = user?.displayName?.split(" ") ?? [""];
+  const { isLoading } = useGetLoggedUser();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-2">
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <Skeleton className="h-6 w-24" />
+      </div>
+    );
+  }
+
+  if (!firebaseUser || !user) {
+    return null;
+  }
+
+  const splittedUserName = user.name?.split(" ") ?? [""];
   const fallBackName =
     splittedUserName[0][0] + splittedUserName[splittedUserName.length - 1][0];
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton size="lg">
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-8 w-8 rounded-full">
                 <AvatarImage
-                  src={user?.photoURL ?? ""}
-                  alt={user?.displayName ?? ""}
+                  src={user?.profilePicture ?? ""}
+                  alt={user?.name ?? ""}
                 />
                 <AvatarFallback className="rounded-lg">
                   {fallBackName ?? ""}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">
-                  {user?.displayName}
-                </span>
-                <span className="truncate text-xs">{user?.email}</span>
+                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -64,7 +82,7 @@ export function SidebarDropdownMenu() {
               }}
             >
               <LogOut />
-              Log out
+              Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

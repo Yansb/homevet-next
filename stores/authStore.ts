@@ -1,8 +1,13 @@
 import { auth } from "@/config/firebaseConfig";
 import { login } from "@/services/authService";
 import { User } from "firebase/auth";
-import { UseMutationResult, useMutation } from "@tanstack/react-query";
+import {
+  UseMutationResult,
+  useMutation,
+  QueryClient,
+} from "@tanstack/react-query";
 import { create } from "zustand";
+import { useUserStore } from "./userStore";
 
 interface LoginCredentials {
   email: string;
@@ -10,7 +15,7 @@ interface LoginCredentials {
 }
 
 type AuthState = {
-  user: User | null;
+  firebaseUser: User | null;
   loading: boolean;
   setUser: (user: User | null) => void;
   setLoading: (loading: boolean) => void;
@@ -19,17 +24,22 @@ type AuthState = {
 };
 
 export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
+  firebaseUser: null,
   loading: true,
-  setUser: (user) => set({ user }),
+  setUser: (user) => set({ firebaseUser: user }),
   setLoading: (loading) => set({ loading }),
   logout: async () => {
     await auth.signOut();
-    set({ user: null });
+    set({ firebaseUser: null });
+    useUserStore.getState().clearUser();
   },
   initialize: () => {
+    const queryClient = new QueryClient();
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      set({ user, loading: false });
+      if (!user) {
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+      }
+      set({ firebaseUser: user, loading: false });
     });
 
     return unsubscribe;

@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 
 export function LoginPageForm() {
   const router = useRouter();
-  const user = useAuthStore((state) => state.user);
+  const user = useAuthStore((state) => state.firebaseUser);
   const loginMutation = useLogin();
 
   const form = useForm<LoginFormSchema>({

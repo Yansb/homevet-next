@@ -1,7 +1,8 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { api } from "./api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { api, apiWithAuth } from "./api";
 import { toast } from "sonner";
 import { useAuthStore } from "@/stores/authStore";
+import { useUserStore } from "@/stores/userStore";
 
 interface Location {
   latitude: string;
@@ -34,7 +35,7 @@ export interface UserResponse {
   email: string;
   phoneNumber: string;
   roles: string[];
-  address: AddressResponse[];
+  profilePicture: string;
 }
 
 interface AddressResponse {
@@ -65,20 +66,39 @@ export const useCreateUser = () => {
 };
 
 export const useGetLoggedUser = () => {
-  const user = useAuthStore((state) => state.user);
+  const user = useAuthStore((state) => state.firebaseUser);
+  const setUser = useUserStore((state) => state.setUser);
+  const queryClient = useQueryClient();
 
-  return useQuery<UserResponse>({
+  return useQuery<UserResponse, Error>({
     queryFn: async () => {
-      const token = await user?.getIdToken();
-      const response = await api.get<UserResponse>("/user/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await apiWithAuth.get<UserResponse>("/user/me");
+      setUser(response.data);
       return response.data;
     },
     queryKey: ["user"],
     staleTime: 1000 * 60 * 60 * 2, // 2 hours
     enabled: !!user,
+    refetchOnMount: false,
+    retry: false,
+    gcTime: 0,
+  });
+};
+
+export const useConfirmProfilePictureMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (key: string) => {
+      const response = await apiWithAuth.put(`/user/confirm-profile/${key}`);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Imagem atualizada com sucesso.");
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (error) => {
+      toast.error("Erro ao criar atualizar imagem. Tente novamente.");
+    },
   });
 };

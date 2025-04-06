@@ -8,7 +8,7 @@ export default function HomePage() {
       <CardHeader className="px-4 py-4 sm:px-6 sm:py-6">
         <div className="flex flex-col gap-2">
           <CardTitle className="scroll-m-20 text-xl font-bold tracking-tight sm:text-2xl lg:text-3xl">
-            Médicos próximos
+            Veterinarios próximos
           </CardTitle>
           <div className="text-muted-foreground flex items-center text-sm">
             <MapPin className="mr-1 h-4 w-4" />
