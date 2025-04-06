@@ -8,7 +8,7 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import { UseFormReturn } from "react-hook-form";
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
@@ -16,6 +16,7 @@ import { DoctorSignUpFormData } from "@/app/(auth)/cadastro/types/schema";
 import dynamic from "next/dynamic";
 
 // Fix marker icon issues
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:

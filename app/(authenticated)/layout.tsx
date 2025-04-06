@@ -1,7 +1,7 @@
 import { AppSidebar } from "@/components/Sidebar";
 import { MobileFooter } from "@/components/mobile/MobileFooter";
 import { Card } from "@/components/ui/card";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AuthenticatedLayout({
   children,

@@ -25,7 +25,6 @@ import { UserSignUpFormData, userSignUpSchema } from "./types/schema";
 import { useGetLocationByCepQuery } from "@/services/locationService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cepMask, phoneMask } from "@/lib/masks";
-import { Label } from "@/components/ui/label";
 
 export function UserSignUpCard() {
   const [isLocationSet, setIsLocationSet] = useState(false);

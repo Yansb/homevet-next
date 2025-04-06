@@ -1,4 +1,4 @@
-import { Calendar, Dog, Home } from "lucide-react";
+import { Calendar, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -6,11 +6,9 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "./ui/sidebar";
 import { SidebarDropdownMenu } from "./SidebarMenu";
 import Link from "next/link";
