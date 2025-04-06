@@ -36,9 +36,6 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar variant="sidebar">
-      <SidebarHeader>
-        <SidebarTrigger />
-      </SidebarHeader>
       <SidebarContent>
         {items.map((group) => (
           <SidebarGroup key={group.title} title={group.title}>
