@@ -16,17 +16,12 @@ export function DoctorList() {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude.toString(),
-            lng: position.coords.longitude.toString(),
-          });
-        },
-        (error) => {
-          console.error("Error fetching location:", error);
-        },
-      );
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          lat: position.coords.latitude.toString(),
+          lng: position.coords.longitude.toString(),
+        });
+      });
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
@@ -36,21 +31,24 @@ export function DoctorList() {
     location.lat,
     location.lng,
   );
+
   if (isLoading) {
     return (
-      <div>
-        <Loader2 className="animate-spin" />
+      <div className="flex h-full w-full items-center justify-center">
+        <Loader2 className="text-primary h-8 w-8 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-4 lg:grid-cols-3">
-      {data.length ? (
+    <div className="grid grid-cols-1 gap-4 p-2 sm:grid-cols-2 sm:gap-5 sm:p-4 md:grid-cols-2 lg:grid-cols-3">
+      {data?.length ? (
         data.map((doctor) => <DoctorCard key={doctor.id} doctor={doctor} />)
       ) : (
-        <div>
-          <p>Poxa parece que não tem veterinarios que atendem na sua area!</p>
+        <div className="col-span-full flex flex-col items-center justify-center p-4 text-center">
+          <p className="text-lg font-medium">
+            Poxa, parece que não tem veterinários que atendem na sua área!
+          </p>
         </div>
       )}
     </div>
