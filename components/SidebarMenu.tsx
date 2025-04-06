@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, Dog, LogOut } from "lucide-react";
+import { ChevronsUpDown, Dog, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -71,7 +71,7 @@ export function SidebarDropdownMenu() {
               className="hover:bg-accent cursor-pointer"
               onClick={() => router.push("/perfil")}
             >
-              <Dog />
+              <User />
               Perfil
             </DropdownMenuItem>
             <DropdownMenuItem

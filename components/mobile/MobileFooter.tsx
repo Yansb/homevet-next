@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Home, User } from "lucide-react";
+import { Calendar, Cat, Home, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,11 @@ const footerItems = [
     title: "Agendamentos",
     icon: Calendar,
     url: "/agendamentos",
+  },
+  {
+    title: "Meus Pets",
+    icon: Cat,
+    url: "/pets",
   },
   {
     title: "Perfil",

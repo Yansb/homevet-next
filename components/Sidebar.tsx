@@ -1,4 +1,4 @@
-import { Calendar, Home } from "lucide-react";
+import { Calendar, Cat, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -26,6 +26,11 @@ const items = [
         title: "Agendamentos",
         icon: Calendar,
         url: "/agendamentos",
+      },
+      {
+        title: "Meus Pets",
+        icon: Cat,
+        url: "/pets",
       },
     ],
   },
