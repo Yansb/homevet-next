@@ -13,17 +13,25 @@ export function DoctorList() {
     lat: null,
     lng: null,
   });
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true);
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLocation({
-          lat: position.coords.latitude.toString(),
-          lng: position.coords.longitude.toString(),
-        });
-      });
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude.toString(),
+            lng: position.coords.longitude.toString(),
+          });
+          setIsLoadingLocation(false);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          setIsLoadingLocation(false);
+        },
+      );
     } else {
-      console.error("Geolocation is not supported by this browser.");
+      setIsLoadingLocation(false);
     }
   }, []);
 
@@ -32,7 +40,7 @@ export function DoctorList() {
     location.lng,
   );
 
-  if (isLoading) {
+  if (isLoadingLocation || isLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <Loader2 className="text-primary h-8 w-8 animate-spin" />

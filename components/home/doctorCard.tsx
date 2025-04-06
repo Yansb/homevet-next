@@ -1,6 +1,6 @@
 import { Phone, PawPrint, Mail } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type DoctorCardProps = {
   doctor: {
@@ -10,6 +10,7 @@ type DoctorCardProps = {
     phoneNumber: string;
     specialties: string[];
     licenseNumber: string;
+    profilePicture?: string;
   };
 };
 
@@ -27,6 +28,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
     <Card className="cursor-pointer transition-all duration-200 hover:shadow-md">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
         <Avatar className="h-12 w-12">
+          <AvatarImage src={doctor.profilePicture} alt={doctor.name} />
           <AvatarFallback className="bg-primary text-primary-foreground">
             {getInitials(doctor.name)}
           </AvatarFallback>

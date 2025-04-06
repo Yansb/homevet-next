@@ -63,40 +63,8 @@ export const useGetNearbyDoctorsByLocation = (
       return response.data;
     },
     queryKey: ["nearby-doctors", lat, lng],
-    initialData: () => [
-      {
-        email: "yansbarreiro@gmail.com",
-        name: "Yan Santana Barreiro",
-        licenseNumber: "1234452312",
-        phoneNumber: "+5571992731090",
-        specialties: ["Ortopedia"],
-        serviceRadius: 1000,
-        id: "12312431",
-        address: {
-          addressName: "",
-          city: "Salvador",
-          zipCode: "41815-050",
-          state: "BA",
-          street: "Padre manoel barbosa",
-        },
-      },
-      {
-        email: "yansbarreiro@gmail.com",
-        name: "Yan Santana Barreiro",
-        licenseNumber: "1234452312",
-        phoneNumber: "+5571992731090",
-        specialties: ["Ortopedia"],
-        serviceRadius: 1000,
-        id: "1231431",
-        address: {
-          addressName: "",
-          city: "Salvador",
-          zipCode: "41815-050",
-          state: "BA",
-          street: "Padre manoel barbosa",
-        },
-      },
-    ],
     enabled: lat !== null && lng !== null,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
   });
 };
